@@ -22,7 +22,6 @@ def get_openai_client():
 
 @st.cache_resource(show_spinner=False)
 def get_embeddings():
-    # Optional: speed up + persist HF cache on Streamlit Cloud
     # os.environ.setdefault("HF_HOME", ".cache/huggingface")
     return HuggingFaceEmbeddings(model_name=HF_MODEL)
 
