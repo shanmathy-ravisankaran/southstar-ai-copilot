@@ -1,5 +1,6 @@
 import os
 import streamlit as st
+import uuid
 from collections import defaultdict
 from rag_pipeline import answer_with_citations, suggest_related_questions
 
