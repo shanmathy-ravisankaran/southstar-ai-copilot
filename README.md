@@ -11,13 +11,16 @@ The system simulates an enterprise knowledge assistant used for policy lookup, c
 
 
 Workflow Summary
+
 1.Document Source
+
     Internal PDFs and files (policies, onboarding docs, checklists)
 
 2.Vectorization Layer
-    a)Documents are chunked
-    b)Text embeddings generated using HuggingFace models
-    c)Stored in a Chroma vector database
+
+        a)Documents are chunked
+        b)Text embeddings generated using HuggingFace models
+        c)Stored in a Chroma vector database
 
 3.Retrieval Layer (RAG)
     
