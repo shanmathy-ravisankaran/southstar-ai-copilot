@@ -56,7 +56,7 @@ def log_answer_feedback(session_id: str, message_id: str, question: str, answer:
             "",   # end_rating empty here
             "",   # end_text empty here
         ])
-
+    print("✅ Feedback saved to feedback.csv")
 def log_end_chat_feedback(session_id: str, end_rating: int, end_text: str):
     _ensure_file_exists()
     ts = datetime.now().isoformat(timespec="seconds")
@@ -75,3 +75,4 @@ def log_end_chat_feedback(session_id: str, end_rating: int, end_text: str):
             end_rating,
             end_text or "",
         ])
+    print("✅ End-chat feedback saved")
