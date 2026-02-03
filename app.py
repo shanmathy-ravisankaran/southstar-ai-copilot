@@ -1,8 +1,11 @@
 import os
 import streamlit as st
 import uuid
+import json
+from datetime import datetime
 from collections import defaultdict
 from rag_pipeline import answer_with_citations, suggest_related_questions
+from feedback_store import log_answer_feedback, log_end_chat_feedback
 
 DB_PATH = "vector_db"
 
@@ -28,6 +31,10 @@ if "messages" not in st.session_state:
 
 if "queued_q" not in st.session_state:
     st.session_state.queued_q = None
+
+if "session_id" not in st.session_state:
+    st.session_state.session_id = str(uuid.uuid4())
+
 
 if "ended" not in st.session_state:
     st.session_state.ended = False
@@ -97,7 +104,27 @@ def render_helpfulness_ui(msg_id: str):
             if st.button("Submit", key=f"improve_submit_{msg_id}"):
                 state["improve"] = improve
                 st.session_state.answer_feedback[msg_id] = state
+
+                # Log to CSV
+                payload = st.session_state.answer_feedback.get(msg_id, {})
+                q = payload.get("question", "")
+                a = payload.get("answer", "")
+                helpful = payload.get("helpful", None)
+                improve_text = payload.get("improve", "")
+                sources = payload.get("sources", [])
+
+                log_answer_feedback(
+                    session_id=st.session_state.session_id,
+                    message_id=msg_id,
+                    question=q,
+                    answer=a,
+                    helpful=helpful,
+                    improve_text=improve_text,
+                    sources=sources
+                )
+
                 st.success("Thanks — feedback saved.")
+
 
 def render_star_rating_row():
     """
@@ -123,7 +150,13 @@ def render_star_rating_row():
     )
 
     if st.button("Submit feedback"):
+        log_end_chat_feedback(
+            session_id=st.session_state.session_id,
+            end_rating=st.session_state.end_rating,
+            end_text=st.session_state.end_text
+        )
         st.success("Thanks! Your feedback was submitted.")
+
 
     st.button("Start new chat", on_click=clear_chat)
 
@@ -167,9 +200,18 @@ if q:
 
         ans_clean = ans.split("EVIDENCE:")[0].strip()
         st.markdown(ans_clean)
-
         # ---- helpful UI for THIS answer ----
         current_asst_id = str(uuid.uuid4())
+
+        # store data for logging later
+        st.session_state.answer_feedback[current_asst_id] = {
+            "helpful": None,
+            "improve": "",
+            "question": q,
+            "answer": ans_clean,
+            "sources": sources,
+        }
+
         render_helpfulness_ui(current_asst_id)
 
         # ---------- Citations (small + clean) ----------
