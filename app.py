@@ -1,7 +1,15 @@
+import os
+from ingest import ingest_docs 
+
+# Build vector DB automatically on cloud if missing
+if not os.path.exists("vector_db"):
+    ingest_docs()
+
 import uuid
 import streamlit as st
 from collections import defaultdict
 from rag_pipeline import answer_with_citations, suggest_related_questions
+
 
 # -------- Policy display names --------
 POLICY_TITLES = {
