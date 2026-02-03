@@ -28,6 +28,13 @@ st.caption("Answers only from internal documents.")
 # ---------- session state ----------
 if "messages" not in st.session_state:
     st.session_state.messages = []
+    # ✅ First welcome message so app doesn't look empty
+    st.session_state.messages.append({
+        "role": "assistant",
+        "content": "Hi! 👋 How can I help you today? Ask me anything from the Southstar policies.",
+        "id": "welcome-1"
+    })
+
 
 if "queued_q" not in st.session_state:
     st.session_state.queued_q = None
@@ -196,7 +203,10 @@ if q:
     # assistant answer
     with st.chat_message("assistant"):
         with st.spinner("Searching documents and generating answer..."):
-            ans, sources = answer_with_citations(q, k=6)
+            ans, sources, chunks = answer_with_citations(q)
+            related = generate_related_questions_from_sources(chunks, k=3)
+
+            st.session_state.related_questions = related_qs
 
         ans_clean = ans.split("EVIDENCE:")[0].strip()
         st.markdown(ans_clean)

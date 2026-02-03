@@ -87,7 +87,45 @@ QUESTION:
         input=prompt
     )
 
-    return resp.output_text.strip(), unique_sources
+    retrieved_chunks = [{"page_content": d.page_content} for d in docs]
+    return resp.output_text.strip(), unique_sources, retrieved_chunks
+
+def generate_related_questions_from_sources(sources, k=3):
+    """
+    Makes related questions ONLY from retrieved doc text.
+    sources: list of dicts containing page_content
+    """
+    if not sources:
+        return []
+
+    client = get_openai_client()  # ⭐ VERY IMPORTANT
+
+    text_blob = "\n\n".join(
+        (s.get("page_content") or "")[:1200]
+        for s in sources[:4]
+    )
+
+    prompt = f"""
+You are generating follow-up questions for a company policy chatbot.
+
+RULES:
+- Use ONLY the information in the CONTEXT.
+- Questions must be answerable from the context.
+- Do NOT create questions about anything not mentioned.
+- Return exactly {k} questions, one per line. No bullets, no numbering.
+
+CONTEXT:
+{text_blob}
+"""
+
+    resp = client.responses.create(
+        model="gpt-4o-mini",
+        input=prompt
+    )
+
+    lines = [q.strip("-• ").strip() for q in resp.output_text.split("\n") if q.strip()]
+    return lines[:k]
+
 
 
 def suggest_related_questions(question: str, sources: list, n: int = 3):
