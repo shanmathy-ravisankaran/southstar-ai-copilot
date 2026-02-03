@@ -3,6 +3,18 @@
     This project delivers an AI-powered internal copilot built using Retrieval-Augmented Generation (RAG). It enables users to ask natural language questions and receive grounded answers from company documents, along with source citations and feedback tracking.
     The system simulates an enterprise knowledge assistant used for policy lookup, compliance questions, and operational support.
 
+🚀 Live Demo
+
+Try the AI Copilot here: 
+
+    👉 https://southstar-ai-copilot-ysh6uwdxfxg6biyh7hfvur.streamlit.app/
+
+    You can ask questions like:
+    A)Who is responsible for reviewing the access control policy?
+    B)How often should access permissions be reviewed?
+    C)How often should access permissions be reviewed?
+    D)What is the company’s vacation policy?
+
 📌 Architecture Overview
 
 <img width="1337" height="625" alt="image" src="https://github.com/user-attachments/assets/594a8644-63a3-4e4c-b89a-92d8cdf6ad76" />
