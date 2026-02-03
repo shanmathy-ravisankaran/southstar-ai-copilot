@@ -1,7 +1,6 @@
 import os
 import streamlit as st
 import uuid
-from urllib.parse import quote
 from collections import defaultdict
 from rag_pipeline import answer_with_citations, suggest_related_questions
 
@@ -21,7 +20,7 @@ POLICY_TITLES = {
 
 st.set_page_config(page_title="Southstar Tech AI Copilot", page_icon="🔒")
 st.title("🔒 Southstar Tech AI Copilot")
-st.caption("Answers only from internal documents with citations.")
+st.caption("Answers only from internal documents.")
 
 # ---------- session state ----------
 if "messages" not in st.session_state:
@@ -164,7 +163,7 @@ if q:
     # assistant answer
     with st.chat_message("assistant"):
         with st.spinner("Searching documents and generating answer..."):
-            ans, sources = answer_with_citations(q)
+            ans, sources = answer_with_citations(q, k=6)
 
         ans_clean = ans.split("EVIDENCE:")[0].strip()
         st.markdown(ans_clean)
@@ -173,8 +172,7 @@ if q:
         current_asst_id = str(uuid.uuid4())
         render_helpfulness_ui(current_asst_id)
 
-        # ---------- Sources ----------
-        st.markdown("### Sources")
+        # ---------- Citations (small + clean) ----------
         grouped = defaultdict(set)
         for s in sources:
             src = s.get("source", "unknown").replace("\\", "/")
@@ -182,17 +180,15 @@ if q:
             filename = src.split("/")[-1]
             grouped[filename].add(page)
 
-        for filename, pages in grouped.items():
-            pages_sorted = sorted(pages)
-            page_links = []
-            for p in pages_sorted:
-                safe_name = quote(filename)
-                url = f"/static/docs/{safe_name}#page={p+1}"
-                page_links.append(f"[Page {p+1}]({url})")
+        if grouped:
+            citations = []
+            for filename, pages in grouped.items():
+                title = POLICY_TITLES.get(filename, filename).replace("📄 ", "")
+                p = min(pages) + 1  # show only the first page number to keep it clean
+                citations.append(f"{title} (p. {p})")
 
+            st.caption("**Citations:** " + " · ".join(citations))
 
-            title = POLICY_TITLES.get(filename, f" {filename}")
-            st.markdown(f"**{title}**: " + " | ".join(page_links))
 
         # ---------- Related Questions ----------
         st.markdown("### Related questions")

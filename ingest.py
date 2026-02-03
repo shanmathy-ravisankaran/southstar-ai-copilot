@@ -17,7 +17,7 @@ def ingest_documents():
             documents.extend(loader.load())
 
     text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=800,
+        chunk_size=600,
         chunk_overlap=100
     )
 

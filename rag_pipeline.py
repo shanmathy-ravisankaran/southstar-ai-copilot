@@ -58,16 +58,20 @@ def answer_with_citations(question: str, chat_history=None, k: int = 4):
         src = d.metadata.get("source", "unknown").replace("\\", "/")
         page = int(d.metadata.get("page", 0)) + 1
         sources_text.append(
-            f"[SOURCE {i}] ({os.path.basename(src)}, page {page})\n{d.page_content}"
+            f"[SOURCE {i}] ({os.path.basename(src)}, page {page})\n{d.page_content[:1500]}"
         )
     context = "\n\n".join(sources_text)
 
     prompt = f"""
-You are a policy assistant. Use ONLY the text inside SOURCES.
-If the answer is not explicitly present, reply exactly:
+You are a company policy assistant.
+
+Use ONLY the information inside SOURCES.
+Do NOT guess. If the answer is not present, reply exactly:
 Not found in the provided documents.
 
-Write a clear answer in 3–5 lines.
+Write the answer as a short professional paragraph (4–5 sentences).
+Do not use bullet points.
+Keep the tone formal and clear.
 
 SOURCES:
 {context}
@@ -75,6 +79,7 @@ SOURCES:
 QUESTION:
 {question}
 """.strip()
+
 
     resp = client.responses.create(
         model="gpt-4o-mini",
