@@ -1,0 +1,17 @@
+# Secrets
+.env
+.streamlit/secrets.toml
+
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Vector database
+vector_db/
+
+# Logs
+*.log
+
+# System
+.DS_Store
