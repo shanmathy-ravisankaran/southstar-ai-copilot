@@ -1,4 +1,5 @@
 🤖 Southstar Tech AI Copilot – Enterprise RAG Assistant
+
 This project delivers an AI-powered internal copilot built using Retrieval-Augmented Generation (RAG). It enables users to ask natural language questions and receive grounded answers from company documents, along with source citations and feedback tracking.
 The system simulates an enterprise knowledge assistant used for policy lookup, compliance questions, and operational support.
 
