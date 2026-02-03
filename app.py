@@ -1,9 +1,9 @@
 import os
-from ingest import ingest_docs 
+from ingest import ingest_documents 
 
 # Build vector DB automatically on cloud if missing
 if not os.path.exists("vector_db"):
-    ingest_docs()
+    ingest_documents()
 
 import uuid
 import streamlit as st
