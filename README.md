@@ -7,7 +7,7 @@ The system simulates an enterprise knowledge assistant used for policy lookup, c
 
 <img width="1337" height="625" alt="image" src="https://github.com/user-attachments/assets/594a8644-63a3-4e4c-b89a-92d8cdf6ad76" />
 
-<img width="1227" height="638" alt="image" src="https://github.com/user-attachments/assets/693893da-4d98-47a8-9aff-c0a9893ce63a" />
+<img width="1227" height="738" alt="image" src="https://github.com/user-attachments/assets/693893da-4d98-47a8-9aff-c0a9893ce63a" />
 
 
 Workflow Summary
