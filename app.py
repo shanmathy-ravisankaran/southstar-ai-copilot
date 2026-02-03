@@ -1,5 +1,7 @@
 import os
 from ingest import ingest_documents 
+from urllib.parse import quote
+
 
 # Build vector DB automatically on cloud if missing
 if not os.path.exists("vector_db"):
@@ -145,7 +147,7 @@ if st.session_state.ended:
     render_star_rating_row()
     st.stop()
 
-# ✅ ALWAYS render chat_input (textbox never disappears)
+#  ALWAYS render chat_input (textbox never disappears)
 typed_q = st.chat_input("Ask a question from Southstar policies...")
 
 # Priority: queued related-question > typed input
@@ -186,8 +188,10 @@ if q:
             pages_sorted = sorted(pages)
             page_links = []
             for p in pages_sorted:
-                url = f"/app/static/docs/{filename}#page={p+1}"
+                safe_name = quote(filename)
+                url = f"/static/docs/{safe_name}#page={p+1}"
                 page_links.append(f"[Page {p+1}]({url})")
+
 
             title = POLICY_TITLES.get(filename, f" {filename}")
             st.markdown(f"**{title}**: " + " | ".join(page_links))
