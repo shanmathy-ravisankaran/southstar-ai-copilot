@@ -1,7 +1,7 @@
 🤖 Southstar Tech AI Copilot – Enterprise RAG Assistant
 
-This project delivers an AI-powered internal copilot built using Retrieval-Augmented Generation (RAG). It enables users to ask natural language questions and receive grounded answers from company documents, along with source citations and feedback tracking.
-The system simulates an enterprise knowledge assistant used for policy lookup, compliance questions, and operational support.
+    This project delivers an AI-powered internal copilot built using Retrieval-Augmented Generation (RAG). It enables users to ask natural language questions and receive grounded answers from company documents, along with source citations and feedback tracking.
+    The system simulates an enterprise knowledge assistant used for policy lookup, compliance questions, and operational support.
 
 📌 Architecture Overview
 
@@ -75,30 +75,33 @@ Workflow Summary
     f)Session tracking
 
 🛠 Tools & Technologies
-Layer	           Technology
-LLM Framework	   LangChain
-Vector DB	        Chroma
-Embeddings	       HuggingFace
-UI	                Streamlit
-Language	         Python
-Architecture	      RAG
+
+    Layer	           Technology
+    LLM Framework	    LangChain
+    Vector DB	        Chroma
+    Embeddings	        HuggingFace
+    UI	                 Streamlit
+    Language	          Python
+    Architecture	       RAG
 
 ⚙️ How to Run
-pip install -r requirements.txt
-streamlit run app.py
+    
+    pip install -r requirements.txt
+    streamlit run app.py
 
 📂 Project Structure
-southstar-ai-copilot/
-│
-├── app.py
-├── rag_pipeline.py
-├── feedback_store.py
-├── ingest.py
-├── vector_db/
-├── docs/
-├── feedback.csv
-├── requirements.txt
-└── README.md
+
+    southstar-ai-copilot/
+    │
+    ├── app.py
+    ├── rag_pipeline.py
+    ├── feedback_store.py
+    ├── ingest.py
+    ├── vector_db/
+    ├── docs/
+    ├── feedback.csv
+    ├── requirements.txt
+    └── README.md
 
 📈 Results & Learnings
 
@@ -116,4 +119,4 @@ southstar-ai-copilot/
 
 📜 License
 
-MIT License
+    MIT License
