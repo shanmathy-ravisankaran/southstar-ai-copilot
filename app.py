@@ -28,12 +28,15 @@ st.caption("Answers only from internal documents.")
 # ---------- session state ----------
 if "messages" not in st.session_state:
     st.session_state.messages = []
-    # ✅ First welcome message so app doesn't look empty
+
+# If chat is empty, add welcome message
+if len(st.session_state.messages) == 0:
     st.session_state.messages.append({
         "role": "assistant",
         "content": "Hi! 👋 How can I help you today? Ask me anything from the Southstar policies.",
         "id": "welcome-1"
     })
+
 
 
 if "queued_q" not in st.session_state:
