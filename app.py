@@ -1,5 +1,7 @@
 import os
+import uuid
 import streamlit as st
+from urllib.parse import quote 
 from collections import defaultdict
 from rag_pipeline import answer_with_citations, suggest_related_questions
 
