@@ -18,9 +18,9 @@ Workflow Summary
 
 2.Vectorization Layer
 
-        a)Documents are chunked
-        b)Text embeddings generated using HuggingFace models
-        c)Stored in a Chroma vector database
+    a)Documents are chunked
+    b)Text embeddings generated using HuggingFace models
+    c)Stored in a Chroma vector database
 
 3.Retrieval Layer (RAG)
     
