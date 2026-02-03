@@ -1,18 +1,14 @@
 import os
-from ingest import ingest_documents 
-from urllib.parse import quote
-
-
-# Build vector DB automatically on cloud if missing
-if not os.path.exists("vector_db"):
-    ingest_documents()
-
-import uuid
 import streamlit as st
 from collections import defaultdict
 from rag_pipeline import answer_with_citations, suggest_related_questions
 
+DB_PATH = "vector_db"
 
+# Stop on Streamlit Cloud if DB isn't present (avoid slow ingestion at startup)
+if not os.path.exists(DB_PATH):
+    st.error("Vector database not found. Build `vector_db` locally and push it to GitHub for the demo.")
+    st.stop()
 # -------- Policy display names --------
 POLICY_TITLES = {
     "Access_Control_Policy_SouthstarTech.pdf": "📄 Access Control Policy",
