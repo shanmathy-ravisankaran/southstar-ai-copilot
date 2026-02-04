@@ -249,7 +249,8 @@ if q:
         # ---------- Related Questions ----------
         st.markdown("### Related questions")
         with st.spinner("Thinking of follow-up questions..."):
-            related = suggest_related_questions(q, sources, n=3)
+            related = generate_related_questions_from_sources(chunks, k=3)
+
 
         for i, rq in enumerate(related):
             st.button(
