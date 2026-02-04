@@ -176,10 +176,11 @@ for m in st.session_state.messages:
     with st.chat_message(m["role"]):
         st.markdown(m["content"])
 
-        # Feedback UI under each assistant reply
-        if m["role"] == "assistant":
+        # Show feedback ONLY for real AI answers (not welcome message)
+        if m["role"] == "assistant" and m["id"] != "welcome-1":
             render_helpfulness_ui(m["id"])
             st.markdown("---")
+
 
 # ---------- if chat ended -> show end rating UI and stop ----------
 if st.session_state.ended:
