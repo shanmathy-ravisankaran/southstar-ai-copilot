@@ -4,7 +4,7 @@ import uuid
 import json
 from datetime import datetime
 from collections import defaultdict
-from rag_pipeline import answer_with_citations, suggest_related_questions
+from rag_pipeline import answer_with_citations, generate_related_questions_from_sources
 from feedback_store import log_answer_feedback, log_end_chat_feedback
 
 DB_PATH = "vector_db"
@@ -209,8 +209,8 @@ if q:
         with st.spinner("Searching documents and generating answer..."):
             ans, sources, chunks = answer_with_citations(q)
             related = generate_related_questions_from_sources(chunks, k=3)
+            st.session_state.related_questions = related
 
-            st.session_state.related_questions = related_qs
 
         ans_clean = ans.split("EVIDENCE:")[0].strip()
         st.markdown(ans_clean)
